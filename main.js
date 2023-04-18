@@ -30,17 +30,73 @@ videoBlocks.forEach(function (block) {
   });
 });
 
+// выпадающей аккордеон
 
 const spoilerBlocks = document.querySelectorAll('.spoiler__block');
 
-spoilerBlocks.forEach((spoilerBlock) => {
-  const spoilerBtn = spoilerBlock.querySelector('.spoiler__head');
-  const arrow = spoilerBlock.querySelector('.spoiler__btn');
-  const spoilerContent = spoilerBlock.querySelector('.spoiler__content');
+if (spoilerBlocks.length > 0) {
+  spoilerBlocks.forEach((spoilerBlock) => {
+    const spoilerBtn = spoilerBlock.querySelector('.spoiler__head');
+    const arrow = spoilerBlock.querySelector('.spoiler__btn');
+    const spoilerContent = spoilerBlock.querySelector('.spoiler__content');
 
-  spoilerBtn.addEventListener('click', () => {
-    spoilerContent.classList.toggle('hide');
-    spoilerBtn.classList.toggle('open');
-    arrow.classList.toggle('open');
+    spoilerBtn.addEventListener('click', () => {
+      document.querySelectorAll('.spoiler__content').forEach((content) => {
+        if (!content.classList.contains('hide') && content !== spoilerContent) {
+          content.classList.add('hide');
+          content.parentElement.querySelector('.spoiler__head').classList.remove('open');
+          content.parentElement.querySelector('.spoiler__btn').classList.remove('open');
+        }
+      });
+      spoilerContent.classList.toggle('hide');
+      spoilerBtn.classList.toggle('open');
+      arrow.classList.toggle('open');
+    });
   });
-});
+}
+
+// счетчик назад
+
+function updateTimer(endDate, daysElement, hoursElement, minutesElement, secondsElement) {
+  const remainingTime = endDate - new Date();
+  const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+  if (daysElement) {
+    daysElement.textContent = days.toString().padStart(2, '0');
+  }
+  if (hoursElement) {
+    hoursElement.textContent = hours.toString().padStart(2, '0');
+  }
+  if (minutesElement) {
+    minutesElement.textContent = minutes.toString().padStart(2, '0');
+  }
+  if (secondsElement) {
+    secondsElement.textContent = seconds.toString().padStart(2, '0');
+  }
+}
+
+function startTimer(endDate, timerId) {
+  const daysElement = document.querySelector(`#${timerId} .days`);
+  const hoursElement = document.querySelector(`#${timerId} .hours`);
+  const minutesElement = document.querySelector(`#${timerId} .minutes`);
+  const secondsElement = document.querySelector(`#${timerId} .seconds`);
+
+  if (daysElement && hoursElement && minutesElement && secondsElement) {
+    updateTimer(endDate, daysElement, hoursElement, minutesElement, secondsElement);
+    setInterval(() => updateTimer(endDate, daysElement, hoursElement, minutesElement, secondsElement), 1000);
+  } else {
+    console.warn(`Элементы счетчика для id '${timerId}' не найдены на странице`);
+  }
+}
+
+const endDate1 = new Date('2023-05-01T00:00:00.000Z');
+startTimer(endDate1, 'timer-price-1');
+
+const endDate2 = new Date('2023-06-01T00:00:00.000Z');
+startTimer(endDate2, 'timer-price-2');
+
+const endDate3 = new Date('2023-07-01T00:00:00.000Z');
+startTimer(endDate3, 'timer-price-3');

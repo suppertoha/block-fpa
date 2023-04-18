@@ -2768,6 +2768,9 @@ p {
 .fixedsticky {
   top: 0;
 }
+
+
+
 .original-link {
   position: relative;
   display: -webkit-box;
@@ -5570,6 +5573,10 @@ p {
   margin-left: 20px;
   margin-bottom: 40px;
 }
+
+
+
+
 .reviews__foto {
   position: relative;
   overflow: hidden;
@@ -5612,6 +5619,8 @@ p {
   -o-transition: color 0.2s ease;
   transition: color 0.2s ease;
 }
+
+
 .reviews__original {
   position: absolute;
   top: 50px;
@@ -6087,6 +6096,8 @@ p {
     display: flex;
   }
 }
+
+
 @media screen and (max-width: 576px) {
   .reviews__wrap {
     margin-top: 20px;
